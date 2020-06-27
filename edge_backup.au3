@@ -1,11 +1,11 @@
 #Region ;**** Directives created by AutoIt3Wrapper_GUI ****
 #AutoIt3Wrapper_Icon=c:\Program Files (x86)\AutoIt3\Aut2Exe\Icons\SETUP11.ICO
-#AutoIt3Wrapper_Compression=4
+#AutoIt3Wrapper_Compression=0
 #AutoIt3Wrapper_Res_Description=Backup for Garmin Edge Devices
-#AutoIt3Wrapper_Res_Fileversion=0.8.0.2
+#AutoIt3Wrapper_Res_Fileversion=0.8.1.1
 #AutoIt3Wrapper_Res_Fileversion_AutoIncrement=y
 #AutoIt3Wrapper_Res_ProductName=Edge-Backup
-#AutoIt3Wrapper_Res_ProductVersion=0.80
+#AutoIt3Wrapper_Res_ProductVersion=0.81
 #AutoIt3Wrapper_Res_LegalCopyright=2020 - Jeff Burns
 #AutoIt3Wrapper_Res_LegalTradeMarks=Licensed under the GNU General Public License v3.0
 #AutoIt3Wrapper_Res_Language=1033
@@ -38,7 +38,7 @@ _log4a_SetFormat("${date} | ${host} | ${level} | ${message}")
 #EndRegion ;**** Logging ****
 
 ;Declare vars
-Global $garmindrive
+Global $garmindrive = "nope"
 Global $homedocs = @HomeDrive & @HomePath & '\Documents'
 
 ; Time to find the Garmin Edge unit.  Note - it needs plugged in before running
@@ -53,6 +53,12 @@ If Not @error Then
 	Next
 EndIf
 
+If $garmindrive = "nope" Then
+	MsgBox(4096, "", "Garmin Edge unit not detected")
+	Exit (1)
+EndIf
+
+
 ; Debugs- uncomment below to get prompted with var
 ; MsgBox(4096, "", "Doco drive " & $homedocs)
 
@@ -64,3 +70,5 @@ Global $backupDir3 = _BackupFiles($garmindrive & '\Garmin\Settings', $homedocs, 
 Global $backupDir4 = _BackupFiles($garmindrive & '\Garmin\Sports', $homedocs, '*.fit')
 Global $backupDir5 = _BackupFiles($garmindrive & '\Garmin\Totals', $homedocs, '*.fit')
 Global $backupDir6 = _BackupFiles($garmindrive & '\Garmin\Weight', $homedocs, '*.fit')
+
+MsgBox(4096, "Displaying Results", "Garmin Edge Files backed up to" & $homedocs & "Backups")
