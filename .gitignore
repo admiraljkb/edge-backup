@@ -1,3 +1,4 @@
 *.exe
 *old?.au3
 *.log
+BackUp/
