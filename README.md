@@ -7,7 +7,7 @@ This script is in AutoIT3, version v3.3.14.5 (also works with 3.3.15.3 beta).  D
 Instructions:
 
 * Option 1 - To simply run, pull this repo down local, and then right click on `Run Script`.  (have to have AutoIT3 installed)
-* Option 2 - Download the already compiled EXE from the release page.  The EXE is standalone and doesn't require anything else installed.
+* Option 2 - Download the already compiled EXE from the [release page](https://github.com/admiraljkb/edge-backup/releases).  The EXE is standalone and doesn't require anything else installed.
 
 
 I created this because Garmin 1030 units seem to need a lot of hard resets, reconfiguring them is quite a pain, and so is manually backing up.  
