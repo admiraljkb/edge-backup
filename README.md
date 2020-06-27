@@ -1,7 +1,13 @@
 # edge-backup
 AutoIT3 Windows Utility to backup your Garmin Edge based product.
 
-This script is in AutoIT3, version v3.3.14.5.  Downloadable here:  https://www.autoitscript.com/site/autoit/downloads/ 
+This script is in AutoIT3, version v3.3.14.5 (also works with 3.3.15.3 beta).  Downloadable here:  https://www.autoitscript.com/site/autoit/downloads/ 
+
+(rough instructions follow)
+Instructions:
+
+* Option 1 - To simply run, pull this repo down local, and then right click on `Run Script`.  (have to have AutoIT3 installed)
+* Option 2 - Download the already compiled EXE from the release page.  The EXE is standalone and doesn't require anything else installed.
 
 
 I created this because Garmin 1030 units seem to need a lot of hard resets, reconfiguring them is quite a pain, and so is manually backing up.  
