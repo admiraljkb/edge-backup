@@ -5,6 +5,7 @@ AutoIT3 Windows Utility to backup your Garmin Edge based product.
 This script is in AutoIT3, version v3.3.14.5 (also works with 3.3.15.3 beta).  Downloadable here:  <https://www.autoitscript.com/site/autoit/downloads/>
 
 (rough instructions follow)
+
 Instructions:
 
 * Option 1 - To simply run, pull this repo down local, and then right click on `Run Script`.  (have to have AutoIT3 installed)
