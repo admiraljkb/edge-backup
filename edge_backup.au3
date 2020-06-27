@@ -2,10 +2,10 @@
 #AutoIt3Wrapper_Icon=c:\Program Files (x86)\AutoIt3\Aut2Exe\Icons\SETUP11.ICO
 #AutoIt3Wrapper_Compression=0
 #AutoIt3Wrapper_Res_Description=Backup for Garmin Edge Devices
-#AutoIt3Wrapper_Res_Fileversion=0.8.1.1
+#AutoIt3Wrapper_Res_Fileversion=0.9.0.1
 #AutoIt3Wrapper_Res_Fileversion_AutoIncrement=y
 #AutoIt3Wrapper_Res_ProductName=Edge-Backup
-#AutoIt3Wrapper_Res_ProductVersion=0.81
+#AutoIt3Wrapper_Res_ProductVersion=0.85
 #AutoIt3Wrapper_Res_LegalCopyright=2020 - Jeff Burns
 #AutoIt3Wrapper_Res_LegalTradeMarks=Licensed under the GNU General Public License v3.0
 #AutoIt3Wrapper_Res_Language=1033
@@ -40,6 +40,7 @@ _log4a_SetFormat("${date} | ${host} | ${level} | ${message}")
 ;Declare vars
 Global $garmindrive = "nope"
 Global $homedocs = @HomeDrive & @HomePath & '\Documents'
+_log4a_Info('Documents folder for user detected as : ' & $homedocs)
 
 ; Time to find the Garmin Edge unit.  Note - it needs plugged in before running
 $var = DriveGetDrive("REMOVABLE")
@@ -47,6 +48,7 @@ If Not @error Then
 	For $i = 1 To $var[0]
 		If DriveGetLabel($var[$i]) = "GARMIN" Then
 			$garmindrive = ($var[$i])
+			_log4a_Info('Garmin Edge unit detected as: ' & $garmindrive)
 			;Debugs - uncomment below to get prompted with var
 			;MsgBox(4096, "", "Garmindrive var is " & $garmindrive)
 		EndIf
@@ -55,6 +57,7 @@ EndIf
 
 If $garmindrive = "nope" Then
 	MsgBox(4096, "", "Garmin Edge unit not detected")
+	_log4a_Info('Garmin Edge unit NOT detected.  Exiting with sadness and fail')
 	Exit (1)
 EndIf
 
@@ -63,7 +66,7 @@ EndIf
 ; MsgBox(4096, "", "Doco drive " & $homedocs)
 
 ; Backup all the directories indicated to backup from Garmin Support
-; Yeah, I should have done an array, but well, yeah, I didn't.  :)
+; Yeah, I know... Should have done an array, but well, yeah, I didn't.  :)
 Global $backupDir = _BackupFiles($garmindrive & '\Garmin\Locations', $homedocs, '*.fit')
 Global $backupDir2 = _BackupFiles($garmindrive & '\Garmin\Records', $homedocs, '*.fit')
 Global $backupDir3 = _BackupFiles($garmindrive & '\Garmin\Settings', $homedocs, '*.fit')
@@ -71,4 +74,5 @@ Global $backupDir4 = _BackupFiles($garmindrive & '\Garmin\Sports', $homedocs, '*
 Global $backupDir5 = _BackupFiles($garmindrive & '\Garmin\Totals', $homedocs, '*.fit')
 Global $backupDir6 = _BackupFiles($garmindrive & '\Garmin\Weight', $homedocs, '*.fit')
 
-MsgBox(4096, "Displaying Results", "Garmin Edge Files backed up to" & $homedocs & "Backups")
+MsgBox(4096, "Displaying Results", "Garmin Edge Files backed up to" & $homedocs & "\Backups")
+_log4a_Info("Garmin Edge Files backed up under " & $homedocs & "\Backups")
