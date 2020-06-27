@@ -1,9 +1,12 @@
 #Region ;**** Directives created by AutoIt3Wrapper_GUI ****
+#AutoIt3Wrapper_Icon=c:\Program Files (x86)\AutoIt3\Aut2Exe\Icons\SETUP11.ICO
+#AutoIt3Wrapper_Compression=4
 #AutoIt3Wrapper_Res_Description=Backup for Garmin Edge Devices
-#AutoIt3Wrapper_Res_Fileversion=0.1.0
+#AutoIt3Wrapper_Res_Fileversion=0.1.0.6
 #AutoIt3Wrapper_Res_Fileversion_AutoIncrement=y
 #AutoIt3Wrapper_Res_ProductName=Edge-Backup
 #AutoIt3Wrapper_Res_ProductVersion=0.10
+#AutoIt3Wrapper_Res_LegalCopyright=2020 - Jeff Burns
 #AutoIt3Wrapper_Res_Language=1033
 #AutoIt3Wrapper_Run_Tidy=y
 #EndRegion ;**** Directives created by AutoIt3Wrapper_GUI ****
