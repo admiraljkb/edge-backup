@@ -2,10 +2,10 @@
 #AutoIt3Wrapper_Icon=c:\Program Files (x86)\AutoIt3\Aut2Exe\Icons\SETUP11.ICO
 #AutoIt3Wrapper_Compression=0
 #AutoIt3Wrapper_Res_Description=Backup for Garmin Edge Devices
-#AutoIt3Wrapper_Res_Fileversion=0.9.0.1
+#AutoIt3Wrapper_Res_Fileversion=0.9.2.1
 #AutoIt3Wrapper_Res_Fileversion_AutoIncrement=y
 #AutoIt3Wrapper_Res_ProductName=Edge-Backup
-#AutoIt3Wrapper_Res_ProductVersion=0.85
+#AutoIt3Wrapper_Res_ProductVersion=0.92
 #AutoIt3Wrapper_Res_LegalCopyright=2020 - Jeff Burns
 #AutoIt3Wrapper_Res_LegalTradeMarks=Licensed under the GNU General Public License v3.0
 #AutoIt3Wrapper_Res_Language=1033
@@ -25,6 +25,8 @@
 ; Reconfiguring is quite a pain after a reset, and so is manually backing up.  So here we are with "EdgeBackup"!
 ; Garmin - this util only took me roughly 4 hours.  Why couldn't y'all do it?  XOXO  :)
 ; Using info provided from Garmin Support here: https://support.garmin.com/en-MY/?faq=eWswdSH4aC3xrXxmQj7U9A
+; Add'l info used from aweatherall: https://forums.garmin.com/sports-fitness/cycling/f/edge-1030/224731/profile-backup-when-exchanging-unit
+; and after the initial 0.50 basic version which took 4 hours, I'm up to a lot more now.  But still less than 3 days effort to get to 0.9.2 ... /jkb :)
 
 #Region ;**** Logging ****
 ; Enable logging and don't write to stderr
@@ -73,6 +75,18 @@ Global $backupDir3 = _BackupFiles($garmindrive & '\Garmin\Settings', $homedocs, 
 Global $backupDir4 = _BackupFiles($garmindrive & '\Garmin\Sports', $homedocs, '*.fit')
 Global $backupDir5 = _BackupFiles($garmindrive & '\Garmin\Totals', $homedocs, '*.fit')
 Global $backupDir6 = _BackupFiles($garmindrive & '\Garmin\Weight', $homedocs, '*.fit')
+
+;Adding more directories from aweatherall's post in this thread:  https://forums.garmin.com/sports-fitness/cycling/f/edge-1030/224731/profile-backup-when-exchanging-unit
+Global $backupDir7 = _BackupFiles($garmindrive & '\Garmin\Activities', $homedocs, '*.fit')
+Global $backupDir8 = _BackupFiles($garmindrive & '\Garmin\Courses', $homedocs, '*.fit')
+Global $backupDir9 = _BackupFiles($garmindrive & '\Garmin\HMD', $homedocs, '*.fit')
+Global $backupDir10 = _BackupFiles($garmindrive & '\Garmin\Totals', $homedocs, '*.fit')
+
+;Backing up Apps
+Global $backupDir20 = _BackupFiles($garmindrive & '\Garmin\Apps', $homedocs, '*.prg')
+
+
+
 
 MsgBox(4096, "Displaying Results", "Garmin Edge Files backed up to" & $homedocs & "\Backups")
 _log4a_Info("Garmin Edge Files backed up under " & $homedocs & "\Backups")
