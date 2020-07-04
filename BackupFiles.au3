@@ -12,6 +12,7 @@
 ;                  $to          - base directory where output goes
 ;                  $filespec    - filename. supports wildcards
 ;								- if $filespec = '' then it copies entire directory and all files
+;				   $sTime		- System time var.  Declared in calling script and passed into function.
 ; Return values .: Unique, Time/Date stamped folder name containing the backups
 ; Author ........: Peter Martin
 ; Modified ......:
@@ -20,13 +21,14 @@
 ; Link ..........:
 ; Example .......: No
 ; ===============================================================================================================================
-Func _BackupFiles($from, $to, $filespec)
+Func _BackupFiles($from, $to, $filespec, $sTime)
 	; Get the time
-	Local $sTime = _Date_Time_GetSystemTime()
+	; now passing sTime in as VAR. /jkb
+	; Local $sTime = _Date_Time_GetSystemTime()
 	; convert to string
-	$sTime = _Date_Time_SystemTimeToDateTimeStr($sTime)
-	$sTime = StringFormat("%04d/%02d/%02d %02d:%02d:%02d", @YEAR, @MON, @MDAY, @HOUR, @MIN, @SEC)
-	_log4a_Info('Captured System Date and Time String: ' & $sTime)
+	; $sTime = _Date_Time_SystemTimeToDateTimeStr($sTime)
+	; $sTime = StringFormat("%04d/%02d/%02d %02d:%02d:%02d", @YEAR, @MON, @MDAY, @HOUR, @MIN, @SEC)
+	; _log4a_Info('Inside BackupFiles Function - Captured System Date and Time String: ' & $sTime)
 
 	Local $rep1 = StringReplace($sTime, " ", "-")
 	Local $rep2 = StringReplace($rep1, "/", "-")
