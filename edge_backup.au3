@@ -2,10 +2,10 @@
 #AutoIt3Wrapper_Icon=c:\Program Files (x86)\AutoIt3\Aut2Exe\Icons\SETUP11.ICO
 #AutoIt3Wrapper_Compression=0
 #AutoIt3Wrapper_Res_Description=Backup for Garmin Edge Devices
-#AutoIt3Wrapper_Res_Fileversion=0.9.2.1
+#AutoIt3Wrapper_Res_Fileversion=0.9.3.1
 #AutoIt3Wrapper_Res_Fileversion_AutoIncrement=y
 #AutoIt3Wrapper_Res_ProductName=Edge-Backup
-#AutoIt3Wrapper_Res_ProductVersion=0.92
+#AutoIt3Wrapper_Res_ProductVersion=0.93
 #AutoIt3Wrapper_Res_LegalCopyright=2020 - Jeff Burns
 #AutoIt3Wrapper_Res_LegalTradeMarks=Licensed under the GNU General Public License v3.0
 #AutoIt3Wrapper_Res_Language=1033
@@ -82,11 +82,9 @@ Global $backupDir8 = _BackupFiles($garmindrive & '\Garmin\Courses', $homedocs, '
 Global $backupDir9 = _BackupFiles($garmindrive & '\Garmin\HMD', $homedocs, '*.fit')
 Global $backupDir10 = _BackupFiles($garmindrive & '\Garmin\Totals', $homedocs, '*.fit')
 
-;Backing up Apps
+;Backing up Apps and their settings
 Global $backupDir20 = _BackupFiles($garmindrive & '\Garmin\Apps', $homedocs, '*.prg')
-
-
-
+Global $backupDir21 = _BackupFiles($garmindrive & '\Garmin\Apps\SETTINGS', $homedocs, '*.set')
 
 MsgBox(4096, "Displaying Results", "Garmin Edge Files backed up to" & $homedocs & "\Backups")
 _log4a_Info("Garmin Edge Files backed up under " & $homedocs & "\Backups")
