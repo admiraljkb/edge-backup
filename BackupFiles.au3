@@ -42,15 +42,15 @@ Func _BackupFiles($from, $to, $filespec, $sTime)
 		; copy file to backup location
 		If ( Stringlen($filespec) = 0 ) Then
 			If (DirCopy($from, $TargetDir, 1) = 1) Then
-				_log4a_Info('Directory Copy Successful: '& $from & 'to' & $TargetDir & '\' & $filespec)
+				_log4a_Info('Directory Copy Successful: '& $from & '\' & $filespec & '  ----->  ' & $TargetDir & '\' & $filespec)
 			Else
-				_log4a_Info('Directory Copy Unsuccessful: '& $from & 'to' & $TargetDir & '\' & $filespec)
+				_log4a_Info('Directory Copy Unsuccessful: '& $from & '\' & $filespec & '  ----->  '  & $TargetDir & '\' & $filespec)
 			Endif
 		Else
 			If (FileCopy($from &"\"&$filespec, $TargetDir, 1) = 1) Then
-				_log4a_Info('File Copy Successful:  '& $from & 'to' & $TargetDir & '\' & $filespec)
+				_log4a_Info('File Copy Successful:  '& $from & '\' & $filespec & '  ----->  '  & $TargetDir & '\' & $filespec)
 			Else
-				_log4a_Info('File Copy Unsuccessful:  '& $from & 'to' & $TargetDir & '\' & $filespec)
+				_log4a_Info('File Copy Unsuccessful:  '& $from & '\' & $filespec & '  ----->  '  & $TargetDir & '\' & $filespec)
 			EndIf
 		EndIf
 	Else
