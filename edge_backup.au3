@@ -2,10 +2,10 @@
 #AutoIt3Wrapper_Icon=c:\Program Files (x86)\AutoIt3\Aut2Exe\Icons\SETUP11.ICO
 #AutoIt3Wrapper_Compression=0
 #AutoIt3Wrapper_Res_Description=Backup for Garmin Edge Devices
-#AutoIt3Wrapper_Res_Fileversion=0.9.4.1
+#AutoIt3Wrapper_Res_Fileversion=0.9.5.3
 #AutoIt3Wrapper_Res_Fileversion_AutoIncrement=y
 #AutoIt3Wrapper_Res_ProductName=Edge-Backup
-#AutoIt3Wrapper_Res_ProductVersion=0.94
+#AutoIt3Wrapper_Res_ProductVersion=0.95
 #AutoIt3Wrapper_Res_LegalCopyright=2020 - Jeff Burns
 #AutoIt3Wrapper_Res_LegalTradeMarks=Licensed under the GNU General Public License v3.0
 #AutoIt3Wrapper_Res_Language=1033
@@ -28,26 +28,47 @@
 ; Add'l info used from aweatherall: https://forums.garmin.com/sports-fitness/cycling/f/edge-1030/224731/profile-backup-when-exchanging-unit
 ; and after the initial 0.50 basic version which took 4 hours, I'm up to a lot more now.  But still less than 3 days effort to get to 0.9.2 ... /jkb :)
 
+
+;Declare vars
+Global $garmindrive = "nope"
+Global $homedocs = @HomeDrive & @HomePath & '\Documents'
+
+; Get the time and set that timevar
+$sTime = _Date_Time_GetSystemTime()
+$sTime = _Date_Time_SystemTimeToDateTimeStr($sTime)
+$sTime = StringFormat("%04d/%02d/%02d %02d:%02d:%02d", @YEAR, @MON, @MDAY, @HOUR, @MIN, @SEC)
+; Moving the directory string replace stuff into here so it's usable for log target as well.
+Local $rep1 = StringReplace($sTime, " ", "-")
+Local $rep2 = StringReplace($rep1, "/", "-")
+Local $rep3 = StringReplace($rep2, ":", "-")
+$rep3 = StringReplace($rep2, ":", "-")
+; Set dir string
+Local $TargetDir = $homedocs & "\Backups\BACKUP-" & $rep3
+Global $logfile = $TargetDir & '\edge-backup.log'
+
 #Region ;**** Logging ****
 ; Enable logging and don't write to stderr
 _log4a_SetEnable()
 ; Write to stderr, set min level to warn, customize message format
 _log4a_SetErrorStream()
+_log4a_SetLogFile($logfile)
 _log4a_SetCompiledOutput($LOG4A_OUTPUT_FILE)
 _log4a_SetMinLevel($LOG4A_LEVEL_DEBUG)
 ; If @compiled Then _log4a_SetMinLevel($LOG4A_LEVEL_WARN) ; Change the min level if the script is compiled
 _log4a_SetFormat("${date} | ${host} | ${level} | ${message}")
 #EndRegion ;**** Logging ****
 
-;Declare vars
-Global $garmindrive = "nope"
-Global $homedocs = @HomeDrive & @HomePath & '\Documents'
+;create logging directory sooner
+If (DirCreate($TargetDir) > 0) Then
+	_log4a_Info('Creation of Backup Directory Successful: ' & $TargetDir)
+Else
+	_log4a_Error('Creation of Backup Directory Failed: ' & $TargetDir)
+EndIf
+
+;log the above vars after vars and logging setup
 _log4a_Info('Documents folder for user detected as : ' & $homedocs)
-; Get the time
-$sTime = _Date_Time_GetSystemTime()
-$sTime = _Date_Time_SystemTimeToDateTimeStr($sTime)
-$sTime = StringFormat("%04d/%02d/%02d %02d:%02d:%02d", @YEAR, @MON, @MDAY, @HOUR, @MIN, @SEC)
 _log4a_Info('Initial Captured System Date and Time String: ' & $sTime)
+_log4a_Info('logging output at: ' & $logfile)
 
 
 ; Time to find the Garmin Edge unit.  Note - it needs plugged in before running
