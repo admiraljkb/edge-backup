@@ -2,7 +2,7 @@
 #AutoIt3Wrapper_Icon=c:\Program Files (x86)\AutoIt3\Aut2Exe\Icons\SETUP11.ICO
 #AutoIt3Wrapper_Compression=0
 #AutoIt3Wrapper_Res_Description=Backup for Garmin Edge Devices
-#AutoIt3Wrapper_Res_Fileversion=0.9.5.3
+#AutoIt3Wrapper_Res_Fileversion=0.9.5.5
 #AutoIt3Wrapper_Res_Fileversion_AutoIncrement=y
 #AutoIt3Wrapper_Res_ProductName=Edge-Backup
 #AutoIt3Wrapper_Res_ProductVersion=0.95
@@ -91,6 +91,8 @@ If $garmindrive = "nope" Then
 Else
 	$garmindirsize = DirGetSize($garmindrive & '\Garmin')
 	_log4a_Info("Garmin Edge unit detected. " & $garmindrive & "\Garmin directory size is " & Round($garmindirsize / 1024 / 1024) & "MB")
+	$garmindrivefree = DriveSpaceFree ( $garmindrive )
+	_log4a_Info("Garmin Edge unit detected. " & $garmindrive & "\Garmin Edge free space is " & Round($garmindrivefree / 1024 / 1024) & "MB")
 	Sleep(100)
 EndIf
 
