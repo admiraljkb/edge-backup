@@ -2,7 +2,7 @@
 #AutoIt3Wrapper_Icon=c:\Program Files (x86)\AutoIt3\Aut2Exe\Icons\SETUP11.ICO
 #AutoIt3Wrapper_Compression=0
 #AutoIt3Wrapper_Res_Description=Backup for Garmin Edge Devices
-#AutoIt3Wrapper_Res_Fileversion=0.9.5.5
+#AutoIt3Wrapper_Res_Fileversion=0.9.5.6
 #AutoIt3Wrapper_Res_Fileversion_AutoIncrement=y
 #AutoIt3Wrapper_Res_ProductName=Edge-Backup
 #AutoIt3Wrapper_Res_ProductVersion=0.95
@@ -91,7 +91,7 @@ If $garmindrive = "nope" Then
 Else
 	$garmindirsize = DirGetSize($garmindrive & '\Garmin')
 	_log4a_Info("Garmin Edge unit detected. " & $garmindrive & "\Garmin directory size is " & Round($garmindirsize / 1024 / 1024) & "MB")
-	$garmindrivefree = DriveSpaceFree ( $garmindrive )
+	$garmindrivefree = DriveSpaceFree($garmindrive)
 	_log4a_Info("Garmin Edge unit detected. " & $garmindrive & "\Garmin Edge free space is " & Round($garmindrivefree / 1024 / 1024) & "MB")
 	Sleep(100)
 EndIf
@@ -131,5 +131,12 @@ Sleep(100)
 Global $backupDir21 = _BackupFiles($garmindrive & '\Garmin\Apps\SETTINGS', $homedocs, '*.set', $sTime)
 Sleep(100)
 
-MsgBox(4096, "Displaying Results", "Garmin Edge Files backed up to" & $homedocs & "\Backups")
-_log4a_Info("Garmin Edge Files backed up under " & $homedocs & "\Backups")
+MsgBox(4096, "Displaying Results", "Garmin Edge Files backed up to" & $TargetDir)
+_log4a_Info("Garmin Edge Files backed up under " & $TargetDir)
+_log4a_Info()
+_log4a_Info("****   Restore Info Follows  ****")
+_log4a_Info("Plug Garmin into PC ("x" below is the drive letter assigned to your Garmin EDGE")
+_log4a_Info("Copy all .FIT files to x:\Garmin\NewFiles")
+_log4a_Info("*** When you have apps/widgets, then also do the following ***") 
+_log4a_Info("Copy .PRG files to x:\Garmin\Apps")
+_log4a_Info("Copy .SET files to x:\Garmin\Apps\SETTINGS")
