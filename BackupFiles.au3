@@ -35,7 +35,7 @@ Func _BackupFiles($from, $to, $filespec, $sTime)
 	Local $rep3 = StringReplace($rep2, ":", "-")
 	$rep3 = StringReplace($rep2, ":", "-")
 	; Set dir string
-    Local $TargetDir = $to &"\Backups\BACKUP-" & $rep3
+    Local $TargetDir = $to
 
 	If (DirCreate($TargetDir) > 0) Then
 		_log4a_Info('Creation of Backup Directory Successful: ' & $TargetDir)
