@@ -1,11 +1,11 @@
 #Region ;**** Directives created by AutoIt3Wrapper_GUI ****
 #AutoIt3Wrapper_Icon=c:\Program Files (x86)\AutoIt3\Aut2Exe\Icons\SETUP11.ICO
 #AutoIt3Wrapper_Compression=0
-#AutoIt3Wrapper_Res_Description=Backup for Garmin Edge Devices
-#AutoIt3Wrapper_Res_Fileversion=0.9.5.8
+#AutoIt3Wrapper_Res_Description=Backup for Garmin Edge and Forerunner Devices
+#AutoIt3Wrapper_Res_Fileversion=0.9.6.9
 #AutoIt3Wrapper_Res_Fileversion_AutoIncrement=y
 #AutoIt3Wrapper_Res_ProductName=Edge-Backup
-#AutoIt3Wrapper_Res_ProductVersion=0.95
+#AutoIt3Wrapper_Res_ProductVersion=0.96
 #AutoIt3Wrapper_Res_LegalCopyright=2020 - Jeff Burns
 #AutoIt3Wrapper_Res_LegalTradeMarks=Licensed under the GNU General Public License v3.0
 #AutoIt3Wrapper_Res_Language=1033
@@ -43,7 +43,7 @@ Local $rep2 = StringReplace($rep1, "/", "-")
 Local $rep3 = StringReplace($rep2, ":", "-")
 $rep3 = StringReplace($rep2, ":", "-")
 ; Set dir string
-Local $TargetDir = $homedocs & "\Backups\BACKUP-" & $rep3
+Global $TargetDir = $homedocs & "\Backups\BACKUP-" & $rep3
 Global $logfile = $TargetDir & '\edge-backup.log'
 
 #Region ;**** Logging ****
@@ -77,7 +77,10 @@ If Not @error Then
 	For $i = 1 To $var[0]
 		If DriveGetLabel($var[$i]) = "GARMIN" Then
 			$garmindrive = ($var[$i])
-			_log4a_Info('Garmin Edge unit detected as: ' & $garmindrive)
+			$devicetype = IniRead($garmindrive & "\AUTORUN.INF", "autorun", "label", "nope")
+			$newtarget = $homedocs & "\Backups\" & $devicetype & "_BACKUP-" & $rep3
+			Sleep(100)
+			_BackuptheThings($garmindrive, $devicetype, $newtarget)
 			;Debugs - uncomment below to get prompted with var
 			;MsgBox(4096, "", "Garmindrive var is " & $garmindrive)
 		EndIf
@@ -85,15 +88,11 @@ If Not @error Then
 EndIf
 
 If $garmindrive = "nope" Then
-	MsgBox(4096, "", "Garmin Edge unit not detected")
-	_log4a_Info('Garmin Edge unit NOT detected.  Exiting with sadness and fail')
+	MsgBox(4096, "", "Garmin Edge / Forerunner unit not detected")
+	_log4a_Info('Garmin Edge / Forerunner unit NOT detected.  Exiting with sadness and fail')
 	Exit (1)
 Else
-	$garmindirsize = DirGetSize($garmindrive & '\Garmin')
-	_log4a_Info("Garmin Edge unit detected. " & $garmindrive & "\Garmin directory size is " & Round($garmindirsize / 1024 / 1024) & "MB")
-	$garmindrivefree = DriveSpaceFree($garmindrive)
-	_log4a_Info("Garmin Edge unit detected. " & $garmindrive & "\Garmin Edge free space is " & Round($garmindrivefree / 1024 / 1024) & "MB")
-	Sleep(100)
+
 EndIf
 
 
@@ -102,41 +101,53 @@ EndIf
 
 ; Backup all the directories indicated to backup from Garmin Support
 ; Yeah, I know... Should have done an array, but well, yeah, I didn't.  :)
-Global $backupDir = _BackupFiles($garmindrive & '\Garmin\Locations', $homedocs, '*.fit', $sTime)
-Sleep(100)
+Func _BackuptheThings($gdrive, $dtype, $newtarget)
+	DirMove($TargetDir, $newtarget)
+	Local $logfile = $newtarget & '\edge-backup.log'
+	_log4a_SetLogFile($logfile)
+	Sleep(300)
+	_log4a_Info("*** moved " & $TargetDir & " to " & $newtarget & " ***")
+	_log4a_Info($dtype & ' found at: ' & $gdrive)
+	Global $garmindirsize = DirGetSize($gdrive & '\Garmin')
+	_log4a_Info($dtype & " detected. " & $gdrive & "\Garmin directory size is " & Round($garmindirsize / 1024 / 1024) & "MB")
+	Global $garmindrivefree = DriveSpaceFree($gdrive)
+	_log4a_Info($dtype & " detected. " & $gdrive & " free space is " & Round($garmindrivefree / 1024 / 1024) & "MB")
+	
+	Global $backupDir = _BackupFiles($gdrive & '\Garmin\Locations', $newtarget, '*.fit', $sTime)
+	Sleep(100)
+	Global $backupDir2 = _BackupFiles($gdrive & '\Garmin\Records', $newtarget, '*.fit', $sTime)
+	Sleep(100)
+	Global $backupDir3 = _BackupFiles($gdrive & '\Garmin\Settings', $newtarget, '*.fit', $sTime)
+	Sleep(100)
+	Global $backupDir4 = _BackupFiles($gdrive & '\Garmin\Sports', $newtarget, '*.fit', $sTime)
+	Sleep(100)
+	Global $backupDir5 = _BackupFiles($gdrive & '\Garmin\Totals', $newtarget, '*.fit', $sTime)
+	Sleep(100)
+	Global $backupDir6 = _BackupFiles($gdrive & '\Garmin\Weight', $newtarget, '*.fit', $sTime)
 
-Global $backupDir2 = _BackupFiles($garmindrive & '\Garmin\Records', $homedocs, '*.fit', $sTime)
-Sleep(100)
-Global $backupDir3 = _BackupFiles($garmindrive & '\Garmin\Settings', $homedocs, '*.fit', $sTime)
-Sleep(100)
-Global $backupDir4 = _BackupFiles($garmindrive & '\Garmin\Sports', $homedocs, '*.fit', $sTime)
-Sleep(100)
-Global $backupDir5 = _BackupFiles($garmindrive & '\Garmin\Totals', $homedocs, '*.fit', $sTime)
-Sleep(100)
-Global $backupDir6 = _BackupFiles($garmindrive & '\Garmin\Weight', $homedocs, '*.fit', $sTime)
+	;Adding more directories from aweatherall's post in this thread:  https://forums.garmin.com/sports-fitness/cycling/f/edge-1030/224731/profile-backup-when-exchanging-unit
+	Global $backupDir7 = _BackupFiles($gdrive & '\Garmin\Activities', $newtarget, '*.fit', $sTime)
+	Sleep(100)
+	Global $backupDir8 = _BackupFiles($gdrive & '\Garmin\Courses', $newtarget, '*.fit', $sTime)
+	Sleep(100)
+	Global $backupDir9 = _BackupFiles($gdrive & '\Garmin\HMD', $newtarget, '*.fit', $sTime)
+	Sleep(100)
+	Global $backupDir10 = _BackupFiles($gdrive & '\Garmin\Totals', $newtarget, '*.fit', $sTime)
+	Sleep(100)
 
-;Adding more directories from aweatherall's post in this thread:  https://forums.garmin.com/sports-fitness/cycling/f/edge-1030/224731/profile-backup-when-exchanging-unit
-Global $backupDir7 = _BackupFiles($garmindrive & '\Garmin\Activities', $homedocs, '*.fit', $sTime)
-Sleep(100)
-Global $backupDir8 = _BackupFiles($garmindrive & '\Garmin\Courses', $homedocs, '*.fit', $sTime)
-Sleep(100)
-Global $backupDir9 = _BackupFiles($garmindrive & '\Garmin\HMD', $homedocs, '*.fit', $sTime)
-Sleep(100)
-Global $backupDir10 = _BackupFiles($garmindrive & '\Garmin\Totals', $homedocs, '*.fit', $sTime)
-Sleep(100)
+	;Backing up Apps and their settings
+	Global $backupDir20 = _BackupFiles($gdrive & '\Garmin\Apps', $newtarget, '*.prg', $sTime)
+	Sleep(100)
+	Global $backupDir21 = _BackupFiles($gdrive & '\Garmin\Apps\SETTINGS', $newtarget, '*.set', $sTime)
+	Sleep(100)
 
-;Backing up Apps and their settings
-Global $backupDir20 = _BackupFiles($garmindrive & '\Garmin\Apps', $homedocs, '*.prg', $sTime)
-Sleep(100)
-Global $backupDir21 = _BackupFiles($garmindrive & '\Garmin\Apps\SETTINGS', $homedocs, '*.set', $sTime)
-Sleep(100)
-
-MsgBox(4096, "Displaying Results", "Garmin Edge Files backed up to: " & @LF & $TargetDir)
-_log4a_Info("Garmin Edge Files backed up under " & $TargetDir)
-_log4a_Info("")
-_log4a_Info("****   Restore Info Follows  ****")
-_log4a_Info("Plug Garmin into PC (x below is the drive letter assigned to your Garmin EDGE")
-_log4a_Info("Copy all .FIT files to x:\Garmin\NewFiles")
-_log4a_Info("*** When you have apps/widgets, then also do the following ***")
-_log4a_Info("Copy .PRG files to x:\Garmin\Apps")
-_log4a_Info("Copy .SET files to x:\Garmin\Apps\SETTINGS")
+	MsgBox(4096, "Displaying Results", $dtype & " Files backed up to: " & @LF & $newtarget)
+	_log4a_Info($dtype & " Files backed up under " & $newtarget)
+	_log4a_Info("")
+	_log4a_Info("****   Restore Info Follows  ****")
+	_log4a_Info("Plug Garmin into PC (x below is the drive letter assigned to your " & $dtype)
+	_log4a_Info("Copy all .FIT files to x:\Garmin\NewFiles")
+	_log4a_Info("*** When you have apps/widgets, then also do the following ***")
+	_log4a_Info("Copy .PRG files to x:\Garmin\Apps")
+	_log4a_Info("Copy .SET files to x:\Garmin\Apps\SETTINGS")
+EndFunc   ;==>_BackuptheThings
