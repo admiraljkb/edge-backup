@@ -2,10 +2,10 @@
 #AutoIt3Wrapper_Icon=c:\Program Files (x86)\AutoIt3\Aut2Exe\Icons\SETUP11.ICO
 #AutoIt3Wrapper_Compression=0
 #AutoIt3Wrapper_Res_Description=Backup for Garmin Edge and Forerunner Devices
-#AutoIt3Wrapper_Res_Fileversion=0.9.7.10
+#AutoIt3Wrapper_Res_Fileversion=0.9.8.0
 #AutoIt3Wrapper_Res_Fileversion_AutoIncrement=y
 #AutoIt3Wrapper_Res_ProductName=Edge-Backup
-#AutoIt3Wrapper_Res_ProductVersion=0.97
+#AutoIt3Wrapper_Res_ProductVersion=0.98
 #AutoIt3Wrapper_Res_LegalCopyright=2020 - Jeff Burns
 #AutoIt3Wrapper_Res_LegalTradeMarks=Licensed under the GNU General Public License v3.0
 #AutoIt3Wrapper_Res_Language=1033
@@ -40,16 +40,22 @@ If @error Then
 	Exit (1)
 Else
 	; Add keys with items
+	$oDirectory_File.Add("\Garmin\Activities", "*.fit")
+	$oDirectory_File.Add("\Garmin\Activity", "*.fit")
+	$oDirectory_File.Add("\Garmin\Courses", "*.fit")
+	$oDirectory_File.Add("\Garmin\HMD", "*.fit")
 	$oDirectory_File.Add("\Garmin\Locations", "*.fit")
+	$oDirectory_File.Add("\Garmin\Metrics", "*.fit")
+	$oDirectory_File.Add("\Garmin\MLTSPORT", "*.fit")
+	$oDirectory_File.Add("\Garmin\MONITOR", "*.fit")
 	$oDirectory_File.Add("\Garmin\Records", "*.fit")
+	$oDirectory_File.Add("\Garmin\Schedules", "*.fit")
+	$oDirectory_File.Add("\Garmin\SCHEDULE", "*.fit")
 	$oDirectory_File.Add("\Garmin\Settings", "*.fit")
 	$oDirectory_File.Add("\Garmin\Sports", "*.fit")
 	$oDirectory_File.Add("\Garmin\Totals", "*.fit")
 	$oDirectory_File.Add("\Garmin\Weight", "*.fit")
-	$oDirectory_File.Add("\Garmin\Activities", "*.fit")
-	$oDirectory_File.Add("\Garmin\Courses", "*.fit")
-	$oDirectory_File.Add("\Garmin\HMD", "*.fit")
-
+	
 	$oDirectory_File.Add("\Garmin\Apps", "*.prg")
 	$oDirectory_File.Add("\Garmin\Apps\SETTINGS", "*.set")
 EndIf
