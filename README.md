@@ -1,6 +1,6 @@
 # edge-backup
 
-AutoIT3 Windows Utility to backup your Garmin Edge based product.
+AutoIT3 Windows Utility to backup your Garmin Edge or Forerunner based product.
 
 This script is in AutoIT3, version v3.3.14.5 (also works with 3.3.15.3 beta).  Downloadable here:  <https://www.autoitscript.com/site/autoit/downloads/>
 
@@ -12,7 +12,7 @@ Instructions:
 * Option 2 - Download the already compiled EXE from the [release page](https://github.com/admiraljkb/edge-backup/releases).  The EXE is standalone and doesn't require anything else installed.
 
 Restoration Instructions:
-1. Plug Garmin into PC  ("x" below is the drive letter assigned to your Garmin EDGE)
+1. Plug Garmin into PC  ("x" below is the drive letter assigned to your Garmin EDGE or Forerunner)
 1. Copy `.FIT` files to x:\Garmin\NewFiles
 1. Copy `.PRG` files to x:\Garmin\Apps
 1. Copy `.SET` files to x:\Garmin\Apps\SETTINGS
